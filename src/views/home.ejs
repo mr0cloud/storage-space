@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>SS</title>
+  <link rel="stylesheet" href="/public/style.css">
+</head>
+<body>
+  <%- include('partials/shellbar') %>
+  <div class="wrap">
+    <% if (currentUser) { %>
+      <div class="panel">
+        <div class="panel-title"><span class="sigil">$</span> whoami</div>
+        <div class="panel-body">
+          <p><%= currentUser.firstName %> <%= currentUser.lastName %> — <%= currentUser.email %></p>
+          <div class="actions">
+            <a class="btn" href="/folders">cd ~/folders</a>
+          </div>
+        </div>
+      </div>
+    <% } else { %>
+      <div class="panel">
+        <div class="panel-title"><span class="sigil">$</span> auth --required</div>
+        <div class="panel-body">
+          <p>Not logged in</p>
+          <div class="actions">
+            <a class="btn" href="/login">login</a>
+            <a class="btn" href="/signup">signup</a>
+          </div>
+        </div>
+      </div>
+    <% } %>
+    <div class="term-footer">--- EOF ---</div>
+  </div>
+</body>
+</html>

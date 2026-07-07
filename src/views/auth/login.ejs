@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>login — storage-space</title>
+  <link rel="stylesheet" href="/public/style.css">
+</head>
+<body>
+  <%- include('../partials/shellbar') %>
+  <div class="wrap">
+    <div class="panel">
+      <div class="panel-title"><span class="sigil">$</span> login --user</div>
+      <div class="panel-body">
+        <% if (error) { %>
+          <div class="alert"><%= error %></div>
+        <% } %>
+        <form action="/login" method="POST">
+          <div class="field">
+            <label>Email</label>
+            <input type="email" name="email" required>
+          </div>
+          <div class="field">
+            <label>Password</label>
+            <input type="password" name="password" required>
+          </div>
+          <button type="submit" class="primary">Log in</button>
+        </form>
+        <p style="margin-top:1rem;">No account? <a href="/signup">signup</a></p>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

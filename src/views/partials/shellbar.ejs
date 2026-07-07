@@ -1,0 +1,26 @@
+<div class="shell-bar">
+  <div class="prompt">
+    <span class="user">
+      <%= currentUser ? currentUser.firstName.toLowerCase() : 'guest' %>
+    </span><span class="at">@</span><span class="host">storage-space</span><span class="dollar">:</span><span
+      class="path">~<%= typeof shellPath !=='undefined' ? shellPath : '' %></span><span class="dollar">$</span> <span
+      class="cursor"></span>
+  </div>
+  <nav>
+    <% if (currentUser) { %>
+      <a href="/folders">~</a>
+      <form action="/logout" method="POST" style="display:inline;">
+        <button type="submit">logout</button>
+      </form>
+
+      <form action="/account?_method=DELETE" method="POST">
+        <button type="submit" class="danger" onclick="return confirm('Delete your account and all folders/files?')">
+          rm -rf
+        </button>
+      </form>
+      <% } else { %>
+        <a href="/login">login</a>
+        <a href="/signup">signup</a>
+        <% } %>
+  </nav>
+</div>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>mkdir — storage-space</title>
+  <link rel="stylesheet" href="/public/style.css">
+</head>
+<body>
+  <%- include('../partials/shellbar') %>
+  <div class="wrap">
+    <div class="panel">
+      <div class="panel-title"><span class="sigil">$</span> mkdir --new</div>
+      <div class="panel-body">
+        <% if (error) { %>
+          <div class="alert"><%= error %></div>
+        <% } %>
+        <form action="/folders" method="POST">
+          <input type="hidden" name="parentId" value="<%= parentId || '' %>">
+          <div class="field">
+            <label>Folder name</label>
+            <input type="text" name="name" required>
+          </div>
+          <button type="submit" class="primary">Create</button>
+        </form>
+        <p style="margin-top:1rem;">
+          <a href="<%= parentId ? '/folders/' + parentId : '/folders' %>">cancel</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

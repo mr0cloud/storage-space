@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>~/folders — storage-space</title>
+  <link rel="stylesheet" href="/public/style.css">
+</head>
+<body>
+  <%- include('../partials/shellbar') %>
+  <div class="wrap">
+
+    <div class="panel">
+      <div class="panel-title"><span class="sigil">$</span> ls -la ~/</div>
+      <div class="panel-body">
+        <ul class="ls-list">
+          <% folders.forEach(folder => { %>
+            <li class="is-dir">
+              <span class="perm">drwxr-xr-x</span>
+              <span class="name"><a href="/folders/<%= folder.id %>"><%= folder.name %></a></span>
+            </li>
+          <% }) %>
+        </ul>
+        <% if (folders.length === 0) { %>
+          <p class="empty-note">no folders found</p>
+        <% } %>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-title"><span class="sigil">$</span> mkdir --new</div>
+      <div class="panel-body">
+        <a class="btn" href="/folders/new">+ New Folder</a>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-title"><span

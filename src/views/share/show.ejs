@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>shared: <%= folder.name %></title>
+  <link rel="stylesheet" href="/public/style.css">
+</head>
+<body>
+  <div class="shell-bar">
+    <div class="prompt">
+      <span class="user">anon</span><span class="at">@</span><span class="host">storage-space</span><span class="dollar">:</span><span class="path">~/shared/<%= folder.name %></span><span class="dollar">$</span> <span class="cursor"></span>
+    </div>
+  </div>
+  <div class="wrap">
+    <div class="alert info">read-only shared view — no login required</div>
+
+    <div class="panel">
+      <div class="panel-title"><span class="sigil">$</span> ls -la ./<%= folder.name %></div>
+      <div class="panel-body">
+        <ul class="ls-list">
+          <% folder.children.forEach(child => { %>
+            <li class="is-dir">
+              <span class="perm">drwxr-xr-x</span>
+              <span class="name"><%= child.name %></span>
+            </li>
+          <% }) %>
+          <% folder.files.forEach(file => { %>
+            <li class="is-file">
+              <span class="perm">-rw-r--r--</span>
+              <span class="name"><a href="<%= file.url %>" download><%= file.name %></a></span>
+              <span class="size"><%= (file.size / 1024).toFixed(0) %>K</span>
+            </li>
+          <% }) %>
+        </ul>
+        <% if (folder.children.length === 0 && folder.files.length === 0) { %>
+          <p class="empty-note">directory empty</p>
+        <% } %>
+      </div>
+    </div>
+
+    <div class="term-footer">--- EOF ---</div>
+  </div>
+</body>
+</html>

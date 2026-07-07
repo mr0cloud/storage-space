@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>mv — storage-space</title>
+  <link rel="stylesheet" href="/public/style.css">
+</head>
+<body>
+  <%- include('../partials/shellbar') %>
+  <div class="wrap">
+    <div class="panel">
+      <div class="panel-title"><span class="sigil">$</span> mv <%= folder.name %> --rename</div>
+      <div class="panel-body">
+        <% if (error) { %>
+          <div class="alert"><%= error %></div>
+        <% } %>
+        <form action="/folders/<%= folder.id %>?_method=PUT" method="POST">
+          <div class="field">
+            <label>Folder name</label>
+            <input type="text" name="name" value="<%= folder.name %>" required>
+          </div>
+          <button type="submit" class="primary">Rename</button>
+        </form>
+        <p style="margin-top:1rem;"><a href="/folders/<%= folder.id %>">cancel</a></p>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

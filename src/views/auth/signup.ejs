@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>signup — storage-space</title>
+  <link rel="stylesheet" href="../../public/style.css">
+</head>
+<body>
+  <%- include('../partials/shellbar') %>
+  <div class="wrap">
+    <div class="panel">
+      <div class="panel-title"><span class="sigil">$</span> adduser --new</div>
+      <div class="panel-body">
+        <% if (error) { %>
+          <div class="alert"><%= error %></div>
+        <% } %>
+        <form action="/signup" method="POST">
+          <div class="field">
+            <label>First name</label>
+            <input type="text" name="firstName" required>
+          </div>
+          <div class="field">
+            <label>Last name</label>
+            <input type="text" name="lastName" required>
+          </div>
+          <div class="field">
+            <label>Email</label>
+            <input type="email" name="email" required>
+          </div>
+          <div class="field">
+            <label>Password</label>
+            <input type="password" name="password" required minlength="6">
+          </div>
+          <button type="submit" class="primary">Create account</button>
+        </form>
+        <p style="margin-top:1rem;">Already have an account? <a href="/login">login</a></p>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

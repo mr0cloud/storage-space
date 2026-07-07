@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title><%= file.name %> — storage-space</title>
+  <link rel="stylesheet" href="/public/style.css">
+</head>
+<body>
+  <%- include('../partials/shellbar') %>
+  <div class="wrap">
+    <div class="panel">
+      <div class="panel-title"><span class="sigil">$</span> stat <%= file.name %></div>
+      <div class="panel-body">
+        <div class="stat-row"><span>name</span><span><%= file.name %></span></div>
+        <div class="stat-row"><span>size</span><span><%= (file.size / 1024).toFixed(2) %> KB</span></div>
+        <div class="stat-row"><span>type</span><span><%= file.mimeType %></span></div>
+        <div class="stat-row"><span>modified</span><span><%= file.createdAt.toLocaleString() %></span></div>
+
+        <div class="actions">
+          <a class="btn" href="<%= file.url %>" download>Download</a>
+          <form action="/files/<%= file.id %>?_method=DELETE" method="POST">
+            <button type="submit" class="danger" onclick="return confirm('Delete this file?')">rm</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <p><a href="<%= file.folderId ? '/folders/' + file.folderId : '/folders' %>">back</a></p>
+  </div>
+</body>
+</html>
