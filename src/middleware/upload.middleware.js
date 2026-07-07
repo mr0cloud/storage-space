@@ -38,4 +38,17 @@ const upload = multer({
     fileFilter,
 });
 
+function uploadSingleFile(fieldName) {
+  return (req, res, next) => {
+    upload.single(fieldName)(req, res, (err) => {
+      if (err) {
+        req.fileValidationError = err.message;
+      }
+      next();
+    });
+  };
+}
+
+
 module.exports = upload;
+module.exports.uploadSingleFile = uploadSingleFile;

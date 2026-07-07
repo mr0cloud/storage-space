@@ -42,8 +42,16 @@ async function deleteFile(fileId, userId) {
 
 }
 
+async function getRootFiles(userId) {
+  return  await prisma.file.findMany({
+    where: { ownerId: userId, folderId: null },
+    orderBy: { name: "asc" },
+  });
+}
+
 module.exports = {
     uploadFile,
     getFileById,
-    deleteFile
+    deleteFile,
+    getRootFiles
 }

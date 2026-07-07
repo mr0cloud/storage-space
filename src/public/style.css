@@ -117,7 +117,7 @@ h2 { font-size: 1.15rem; text-transform: uppercase; letter-spacing: 0.06em; colo
   font-size: 1.5rem;
 }
 
-.shell-bar .prompt .user { color: var(--green); }
+.shell-bar .prompt .user { color: var(--cyan); }
 .shell-bar .prompt .at { color: var(--fg-dim); }
 .shell-bar .prompt .host { color: var(--magenta); }
 .shell-bar .prompt .path { color: var(--cyan); }
@@ -462,4 +462,79 @@ input[type="file"]::file-selector-button:hover {
 
 .term-footer:empty {
   display: none;
+}
+
+/* ---------- eye toggle ---------- */
+
+.password-field {
+  position: relative;
+}
+
+.password-field input {
+  padding-right: 4rem;
+}
+
+.toggle-pw {
+  position: absolute;
+  right: 0.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  padding: 0.2rem 0.3rem;
+  font-size: 0.85rem;
+  color: var(--cyan-dim);
+  cursor: pointer;
+}
+
+.toggle-pw::before,
+.toggle-pw::after {
+  content: "";
+}
+
+.toggle-pw:hover {
+  color: var(--magenta);
+  background: transparent;
+  border: none;
+}
+
+/* ---------- password checklist ---------- */
+
+.pw-requirements {
+  display: none;
+  max-width: 480px;
+  margin: 0 auto 0.8rem;
+  border-left: 3px solid var(--cyan-dim);
+  background: var(--bg-input);
+  padding: 0.7rem 0.9rem;
+  font-size: 0.95rem;
+}
+
+.pw-requirements.active {
+  display: block;
+}
+
+.pw-requirements ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.pw-requirements li {
+  padding: 0.15rem 0;
+  color: var(--fg-dim);
+}
+
+.pw-requirements li::before {
+  content: "✗ ";
+  color: var(--red);
+}
+
+.pw-requirements li.met {
+  color: var(--green);
+}
+
+.pw-requirements li.met::before {
+  content: "✓ ";
+  color: var(--green);
 }

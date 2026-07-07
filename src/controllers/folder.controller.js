@@ -1,9 +1,11 @@
 const folderService = require("../services/folder.service");
+const fileService = require("../services/file.service");
 
 async function listRootFolders(req, res, next) {
     try{
         const folders = await folderService.getRootFolders(req.user.id);
-        res.render("folders/index", {folders});
+        const files = await fileService.getRootFiles(req.user.id);
+        res.render("folders/index", {folders, files});
     }catch (err){
         next(err);
     }

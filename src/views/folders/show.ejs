@@ -1,24 +1,29 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <meta charset="UTF-8">
-  <title><%= folder.name %> — storage-space</title>
+  <title><%= folder.name %> -- SS</title>
   <link rel="stylesheet" href="/public/style.css">
 </head>
+
 <body>
   <%- include('../partials/shellbar', { shellPath: '/folders/' + folder.name }) %>
   <div class="wrap">
+    <% if (typeof error !== 'undefined' && error) { %>
+    <div class="alert"><%= error %></div>
+    <% } %>
 
     <div class="breadcrumb">
       <a href="/folders">~</a>
       <% breadcrumb.forEach(crumb => { %>
-        <span class="sep">/</span>
-        <a href="/folders/<%= crumb.id %>"><%= crumb.name %></a>
+      <span class="sep">/</span>
+      <a href="/folders/<%= crumb.id %>"><%= crumb.name %></a>
       <% }) %>
     </div>
 
     <% if (typeof shareLink !== 'undefined' && shareLink) { %>
-      <div class="alert info">link generated — copy it below</div>
+    <div class="alert info">link generated — copy it below</div>
     <% } %>
 
     <div class="panel">
@@ -53,21 +58,21 @@
       <div class="panel-body">
         <ul class="ls-list">
           <% folder.children.forEach(child => { %>
-            <li class="is-dir">
-              <span class="perm">drwxr-xr-x</span>
-              <span class="name"><a href="/folders/<%= child.id %>"><%= child.name %></a></span>
-            </li>
+          <li class="is-dir">
+            <span class="perm">drwxr-xr-x</span>
+            <span class="name"><a href="/folders/<%= child.id %>"><%= child.name %></a></span>
+          </li>
           <% }) %>
           <% folder.files.forEach(file => { %>
-            <li class="is-file">
-              <span class="perm">-rw-r--r--</span>
-              <span class="name"><a href="/files/<%= file.id %>"><%= file.name %></a></span>
-              <span class="size"><%= (file.size / 1024).toFixed(0) %>K</span>
-            </li>
+          <li class="is-file">
+            <span class="perm">-rw-r--r--</span>
+            <span class="name"><a href="/files/<%= file.id %>"><%= file.name %></a></span>
+            <span class="size"><%= (file.size / 1024).toFixed(0) %>K</span>
+          </li>
           <% }) %>
         </ul>
         <% if (folder.children.length === 0 && folder.files.length === 0) { %>
-          <p class="empty-note">directory empty</p>
+        <p class="empty-note">directory empty</p>
         <% } %>
       </div>
     </div>
@@ -76,7 +81,7 @@
       <div class="panel-title"><span class="sigil">$</span> share --folder --ttl</div>
       <div class="panel-body">
         <% if (typeof shareLink !== 'undefined' && shareLink) { %>
-          <div class="share-readout"><%= shareLink %></div>
+        <div class="share-readout"><%= shareLink %></div>
         <% } %>
         <form action="/shared-links" method="POST">
           <input type="hidden" name="folderId" value="<%= folder.id %>">
@@ -96,4 +101,5 @@
     <div class="term-footer">--- EOF ---</div>
   </div>
 </body>
+
 </html>

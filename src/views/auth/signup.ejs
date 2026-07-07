@@ -1,41 +1,102 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="UTF-8">
-  <title>signup — storage-space</title>
-  <link rel="stylesheet" href="../../public/style.css">
+<meta charset="UTF-8">
+<title>signup -- SS</title>
+<link rel="stylesheet" href="/public/style.css">
 </head>
 <body>
-  <%- include('../partials/shellbar') %>
-  <div class="wrap">
-    <div class="panel">
-      <div class="panel-title"><span class="sigil">$</span> adduser --new</div>
-      <div class="panel-body">
-        <% if (error) { %>
-          <div class="alert"><%= error %></div>
-        <% } %>
-        <form action="/signup" method="POST">
-          <div class="field">
-            <label>First name</label>
-            <input type="text" name="firstName" required>
-          </div>
-          <div class="field">
-            <label>Last name</label>
-            <input type="text" name="lastName" required>
-          </div>
-          <div class="field">
-            <label>Email</label>
-            <input type="email" name="email" required>
-          </div>
-          <div class="field">
-            <label>Password</label>
-            <input type="password" name="password" required minlength="6">
-          </div>
-          <button type="submit" class="primary">Create account</button>
-        </form>
-        <p style="margin-top:1rem;">Already have an account? <a href="/login">login</a></p>
-      </div>
-    </div>
-  </div>
+<%- include('../partials/shellbar') %>
+<div class="wrap">
+<% if (typeof errors !== 'undefined' && errors && errors.length > 0) { %>
+<div class="alert">
+<ul style="margin:0; padding-left:1.2rem;">
+<% errors.forEach(msg => { %>
+<li><%= msg %></li>
+<% }) %>
+</ul>
+</div>
+<% } else if (error) { %>
+<div class="alert"><%= error %></div>
+<% } %>
+<div class="panel">
+<div class="panel-title"><span class="sigil">$</span> adduser --new</div>
+<div class="panel-body">
+<form action="/signup" method="POST">
+<div class="field">
+<label>First name</label>
+<input type="text" name="firstName" required>
+</div>
+<div class="field">
+<label>Last name</label>
+<input type="text" name="lastName" required>
+</div>
+<div class="field">
+<label>Email</label>
+<input type="email" name="email" required>
+</div>
+<div class="field">
+<label>Password</label>
+<div class="pw-requirements" id="pwRequirements">
+<ul>
+<li data-rule="length">at least 6 characters</li>
+<li data-rule="lowercase">a lowercase letter</li>
+<li data-rule="uppercase">an uppercase letter</li>
+<li data-rule="number">a number</li>
+<li data-rule="special">a special character</li>
+</ul>
+</div>
+<div class="password-field">
+<input type="password" name="password" id="password" required minlength="8">
+<button type="button" class="toggle-pw" data-target="password">show</button>
+</div>
+</div>
+<button type="submit" class="primary">Create account</button>
+</form>
+<p style="margin-top:1rem;">Already have an account? <a href="/login">login</a></p>
+</div>
+</div>
+</div>
+
+<script>
+(function () {
+  var pwInput = document.getElementById('password');
+  var reqBox = document.getElementById('pwRequirements');
+
+  function toggleRule(rule, met) {
+    var li = reqBox.querySelector('[data-rule="' + rule + '"]');
+    if (li) li.classList.toggle('met', met);
+  }
+
+  if (pwInput && reqBox) {
+    pwInput.addEventListener('focus', function () {
+      reqBox.classList.add('active');
+    });
+
+    pwInput.addEventListener('input', function () {
+      var val = pwInput.value;
+      toggleRule('length', val.length >= 8);
+      toggleRule('lowercase', /[a-z]/.test(val));
+      toggleRule('uppercase', /[A-Z]/.test(val));
+      toggleRule('number', /[0-9]/.test(val));
+      toggleRule('special', /[^a-zA-Z0-9]/.test(val));
+    });
+  }
+
+  document.querySelectorAll('.toggle-pw').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var input = document.getElementById(btn.dataset.target);
+      if (!input) return;
+      if (input.type === 'password') {
+        input.type = 'text';
+        btn.textContent = 'hide';
+      } else {
+        input.type = 'password';
+        btn.textContent = 'show';
+      }
+    });
+  });
+})();
+</script>
 </body>
 </html>

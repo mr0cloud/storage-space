@@ -1,33 +1,60 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="UTF-8">
-  <title>login — storage-space</title>
-  <link rel="stylesheet" href="/public/style.css">
+<meta charset="UTF-8">
+<title>login -- SS</title>
+<link rel="stylesheet" href="/public/style.css">
 </head>
 <body>
-  <%- include('../partials/shellbar') %>
-  <div class="wrap">
-    <div class="panel">
-      <div class="panel-title"><span class="sigil">$</span> login --user</div>
-      <div class="panel-body">
-        <% if (error) { %>
-          <div class="alert"><%= error %></div>
-        <% } %>
-        <form action="/login" method="POST">
-          <div class="field">
-            <label>Email</label>
-            <input type="email" name="email" required>
-          </div>
-          <div class="field">
-            <label>Password</label>
-            <input type="password" name="password" required>
-          </div>
-          <button type="submit" class="primary">Log in</button>
-        </form>
-        <p style="margin-top:1rem;">No account? <a href="/signup">signup</a></p>
-      </div>
-    </div>
-  </div>
+<%- include('../partials/shellbar') %>
+<div class="wrap">
+<% if (typeof errors !== 'undefined' && errors && errors.length > 0) { %>
+<div class="alert">
+<ul style="margin:0; padding-left:1.2rem;">
+<% errors.forEach(msg => { %>
+<li><%= msg %></li>
+<% }) %>
+</ul>
+</div>
+<% } else if (error) { %>
+<div class="alert"><%= error %></div>
+<% } %>
+<div class="panel">
+<div class="panel-title"><span class="sigil">$</span> login --user</div>
+<div class="panel-body">
+<form action="/login" method="POST">
+<div class="field">
+<label>Email</label>
+<input type="email" name="email" required>
+</div>
+<div class="field">
+<label>Password</label>
+<div class="password-field">
+<input type="password" name="password" id="password" required>
+<button type="button" class="toggle-pw" data-target="password">show</button>
+</div>
+</div>
+<button type="submit" class="primary">Log in</button>
+</form>
+<p style="margin-top:1rem;">No account? <a href="/signup">signup</a></p>
+</div>
+</div>
+</div>
+
+<script>
+document.querySelectorAll('.toggle-pw').forEach(function (btn) {
+  btn.addEventListener('click', function () {
+    var input = document.getElementById(btn.dataset.target);
+    if (!input) return;
+    if (input.type === 'password') {
+      input.type = 'text';
+      btn.textContent = 'hide';
+    } else {
+      input.type = 'password';
+      btn.textContent = 'show';
+    }
+  });
+});
+</script>
 </body>
 </html>

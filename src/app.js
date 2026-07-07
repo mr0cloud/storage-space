@@ -40,5 +40,9 @@ app.use("/", fileRouter);
 app.use("/", sharedLinkRouter);
 app.use("/", shareRouter);
 
+app.use((err, req, res, next) => {
+  const status = err.status || 500;
+  res.status(status).send(err.message || "Something went wrong");
+});
 
 module.exports = app;
